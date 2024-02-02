@@ -16,6 +16,7 @@ module.exports = function (nodecg: NodeCG.ServerAPI) {
 	};
 	//router
     router.post("/", (req, res) => {
+        res.setHeader('Content-Type', 'application/json');
         //POSTを待ち受ける
         const { state, title, artist, album  } = req.body;
 		//stateが0-2の範囲に入ってるか確認
@@ -54,7 +55,7 @@ module.exports = function (nodecg: NodeCG.ServerAPI) {
             }, 900000)
         } else {
             //エラーを返す
-            res.send('{result: "ng", "error": "Invaild type"}');
+            res.status(400).send('{result: "ng", "error": "Invaild type"}');
         }
     });
     nodecg.mount("/playback", router);
